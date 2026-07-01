@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Digital Clock</title>
+    <style>
+        /* CSS styling rules */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0f1115;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .clock-card {
+            background: linear-gradient(145deg, #14181f, #1a1f29);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid #252e3d;
+            text-align: center;
+        }
+
+        #clock-display {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: #39ff14;
+            text-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
+            font-variant-numeric: tabular-nums; /* Prevents text shifting */
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HTML structures -->
+    <div class="clock-card">
+        <div id="clock-display">00:00:00 AM</div>
+    </div>
+
+    <!-- JavaScript mechanics -->
+    <script>
+        function runClock() {
+            const display = document.getElementById('clock-display');
+            const now = new Date();
+            
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            // Define AM or PM status
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            // Adjust to standard 12-hour window
+            hours = hours % 12;
+            hours = hours ? hours : 12; 
+            const hoursString = String(hours).padStart(2, '0');
+            
+            // Render text string inside the DOM
+            display.textContent = `${hoursString}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        // Initialize clock instantly
+        runClock();
+
+        // Regenerate calculations every 1000 milliseconds
+        setInterval(runClock, 1000);
+    </script>
+</body>
+</html>
+
